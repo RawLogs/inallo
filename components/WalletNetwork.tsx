@@ -301,7 +301,7 @@ export default function WalletNetwork({ targetAddress, transactions, transfers, 
       return `${cleanAddress.slice(0, 8)}...${cleanAddress.slice(-6)}`;
     };
 
-    // Add labels with copy button
+    // Add labels
     const labelGroup = svg.append('g')
       .selectAll('g')
       .data(nodes)
@@ -316,33 +316,6 @@ export default function WalletNetwork({ targetAddress, transactions, transfers, 
       .attr('fill', '#fff')
       .attr('dx', 15)
       .attr('dy', 4);
-
-    // Add copy button (foreignObject for HTML button)
-    const copyButtons = labelGroup
-      .filter((d: any) => !d.isTarget) // Only show copy button for connected wallets
-      .append('foreignObject')
-      .attr('width', 80)
-      .attr('height', 20)
-      .attr('x', 15)
-      .attr('y', 8);
-
-    copyButtons.append('xhtml:button')
-      .attr('style', 'padding: 2px 6px; background: rgba(14, 165, 233, 0.8); color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 9px;')
-      .text('📋 Copy')
-      .on('click', function(event: any, d: any) {
-        event.stopPropagation();
-        navigator.clipboard.writeText(d.id).then(() => {
-          // Show feedback
-          const btn = d3.select(this);
-          const originalText = btn.text();
-          btn.text('✓ Copied!').style('background', 'rgba(16, 185, 129, 0.8)');
-          setTimeout(() => {
-            btn.text(originalText).style('background', 'rgba(14, 165, 233, 0.8)');
-          }, 1000);
-        }).catch(err => {
-          console.error('Failed to copy:', err);
-        });
-      });
 
     // Add tooltip
     const tooltip = d3.select('body')
@@ -370,39 +343,10 @@ export default function WalletNetwork({ targetAddress, transactions, transfers, 
           .html(`
             <strong>${d.isTarget ? 'Target Wallet' : 'Connected Wallet'}</strong><br/>
             Address: ${d.id}<br/>
-            <button id="copy-btn-${d.id.replace(/[^a-z0-9]/gi, '_')}" 
-                    style="margin-top: 4px; padding: 4px 8px; background: #0ea5e9; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">
-              📋 Copy Address
-            </button><br/>
             Balance: ${balance.toFixed(2)} ALLO<br/>
             Total Received: ${totalIn.toFixed(2)} ALLO<br/>
             Total Sent: ${totalOut.toFixed(2)} ALLO
           `);
-        
-        // Attach copy event listener
-        const btnId = `copy-btn-${d.id.replace(/[^a-z0-9]/gi, '_')}`;
-        setTimeout(() => {
-          const btn = document.getElementById(btnId);
-          if (btn) {
-            btn.addEventListener('click', (e) => {
-              e.stopPropagation();
-              navigator.clipboard.writeText(d.id).then(() => {
-                const originalText = btn.textContent;
-                btn.textContent = '✓ Copied!';
-                (btn as HTMLElement).style.background = '#10b981';
-                setTimeout(() => {
-                  if (btn) {
-                    btn.textContent = originalText;
-                    (btn as HTMLElement).style.background = '#0ea5e9';
-                  }
-                }, 1500);
-              }).catch(err => {
-                console.error('Failed to copy:', err);
-                alert('Failed to copy address');
-              });
-            });
-          }
-        }, 0);
       })
       .on('mousemove', (event) => {
         tooltip
