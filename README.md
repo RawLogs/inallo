@@ -1,6 +1,6 @@
 # Allora Wallet Tracker
 
-A Next.js application for tracking wallets, transactions, and detecting sybil networks on the Allora blockchain.
+A Next.js application for tracking wallets, transactions, and visualizing wallet networks on the Allora blockchain.
 
 ## Features
 

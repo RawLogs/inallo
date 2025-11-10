@@ -5,8 +5,8 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Allora Wallet Tracker',
-  description: 'Track wallets, transactions, and detect sybil networks on Allora blockchain',
+  title: 'Allora Insight',
+  description: 'Insights into the Allora blockchain',
 }
 
 export default function RootLayout({
