@@ -162,10 +162,10 @@ export default function WalletNetwork({ targetAddress, transactions, transfers, 
       transferNetwork.get(transfer.from)!.add(transfer.to);
       
       // Calculate total amount between addresses
-      // Amount is in base units (uallo), convert to ALLO (divide by 1e15)
+      // Amount is in base units (uallo), convert to ALLO (divide by 1e18)
       // 100000000000000000000000 uallo = 100,000 ALLO
-      // So 1 ALLO = 1e15 uallo
-      const amount = parseFloat(transfer.amount) / 1e15;
+      // So 1 ALLO = 1e18 uallo
+      const amount = parseFloat(transfer.amount) / 1e18;
       const key = `${transfer.from}-${transfer.to}`;
       transferAmounts.set(key, (transferAmounts.get(key) || 0) + amount);
     });

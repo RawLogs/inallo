@@ -483,22 +483,22 @@ export class AlloraAPI {
       
       let balance = '0';
       if (alloraBalance && alloraBalance.amount) {
-        // Convert uallo to ALLO (divide by 1e15)
+        // Convert uallo to ALLO (divide by 1e18)
         // 100000000000000000000000 uallo = 100,000 ALLO
-        // So 1 ALLO = 1e15 uallo
+        // So 1 ALLO = 1e18 uallo
         const amountStr = alloraBalance.amount.toString();
         // For very large numbers, use BigInt for precision
-        if (amountStr.length > 15) {
+        if (amountStr.length > 18) {
           const bigAmount = BigInt(amountStr);
-          const divisor = BigInt(1e15);
+          const divisor = BigInt(1e18);
           const result = bigAmount / divisor;
           const remainder = bigAmount % divisor;
           // Add decimal part
-          const decimalPart = Number(remainder) / 1e15;
+          const decimalPart = Number(remainder) / 1e18;
           balance = (Number(result) + decimalPart).toString();
         } else {
           const amount = parseFloat(amountStr);
-          const alloAmount = amount / 1e15;
+          const alloAmount = amount / 1e18;
           balance = alloAmount.toString();
         }
       }
