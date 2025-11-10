@@ -78,7 +78,7 @@ export default function Home() {
       {/* Copyright */}
       <div className="absolute bottom-4 left-4 z-50">
         <p className="text-gray-500 text-xs">
-          Made by Mr Heo
+          Made by RAWOP. All rights reserved.
         </p>
       </div>
     </main>
